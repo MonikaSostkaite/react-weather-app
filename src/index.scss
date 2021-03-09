@@ -13,8 +13,8 @@ body {
 section {
     display: flex;
     align-items: center;
-    width: 80%;
-    padding: 5vh 5vw 0 5vw;
+    flex-flow: row wrap;
+    padding: 5vh 5vw;
 }
 
 #page {
@@ -23,4 +23,10 @@ section {
     display: flex;
     flex-direction: column;
     justify-content: center;
+}
+.title {
+    font-size: .875rem;
+    line-height: 1.25rem;
+    font-weight: bold;
+    color: #555;
 }

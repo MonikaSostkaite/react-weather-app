@@ -5,9 +5,9 @@ import logo from '../../media/weather-forecast-vector.jpg';
 import './index.scss';
 
 const Header = ({ weather }) => (
-    <header>
+    <section className="header">
         {!isEmpty(weather) ? (
-            <section>
+            <>
                 <img src={logo} alt="weather-logo" />
                 <h1 className="h1-title">
                     <span>Weather in</span>
@@ -16,11 +16,11 @@ const Header = ({ weather }) => (
                 <div>
                     <span>{weather.temp}<sup>o</sup>C</span>
                 </div>
-            </section>
+            </>
         ) : (
         <div>no weather for that location</div>
         )}
-    </header>
+    </section>
 );
 
 export default Header;
