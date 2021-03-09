@@ -14,8 +14,10 @@ const AppLayout = () => {
     const [weathers, setWeathers] = useState([]);
     const [latitude, setLatitude] = useState("");
     const [longitude, setLongitude] = useState("");
+    const [isLoading, setIsLoading] = useState(null);
 
     useEffect(() => {
+        setIsLoading(true);
         window.navigator.geolocation.getCurrentPosition(position => {
             setLatitude(position.coords.latitude);
             setLongitude(position.coords.longitude);
@@ -26,8 +28,12 @@ const AppLayout = () => {
                 .then((data) => {
                     setWeather(data.current);
                     setWeathers(data.dailyForecast);
+                    setIsLoading(false);
                 })
-                .catch((error) => setWeather({}));
+                .catch((error) => {
+                    setIsLoading(false);
+                    setWeather({});
+                });
         }
     }, [latitude, longitude]);
     
@@ -57,13 +63,18 @@ const AppLayout = () => {
         if (query.match("^[a-zA-Z ]*$") != null) {
             setError("");
 
+            setIsLoading(true);
             fetchSearchWeatherData(query)
                 .then((data) => {
                     setQuery("");
                     setWeather(data.current);
                     setWeathers(data.dailyForecast);
+                    setIsLoading(false);
                 })
-                .catch((error) => setWeather({}));
+                .catch((error) => {
+                    setIsLoading(false);
+                    setWeather({});
+                });
 
         } else {
             setError('Please enter alphabetic characters');
@@ -74,14 +85,14 @@ const AppLayout = () => {
     
     return (
         <div id="page">
-            <Header weather={weather} />
+            <Header isLoading={isLoading} weather={weather} />
             <Search
                 value={query}
                 error={error}
                 onSubmit={handleSubmit}
                 onChange={handleSearchInputChange}
             />
-            <ForecastList weathers={weathers}/>
+            <ForecastList isLoading={isLoading} weathers={weathers}/>
         </div>
     );
 }

@@ -1,11 +1,12 @@
 import React from 'react';
 import ForecastCard from '../ForecastCard';
+import loader from '../../media/loader.gif';
 
 import './index.scss';
 
-const ForecastList = ({ weathers }) => (
+const ForecastList = ({ isLoading, weathers }) => (
     <section className="cards-list">
-        {weathers.map(({dt, temp, main, weather}) => (
+        {!isLoading ? weathers.map(({dt, temp, main, weather}) => (
             <ForecastCard
                 key={dt}
                 temp_max={temp ? temp.max : main.temp_max} 
@@ -14,7 +15,9 @@ const ForecastList = ({ weathers }) => (
                 main={weather[0].main} 
                 icon={weather[0].icon} 
             />
-        ))} 
+        )) : (
+            <img className="loader" src={loader} alt="loader" />
+        )} 
     </section>
 );
 
