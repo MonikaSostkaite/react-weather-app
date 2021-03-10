@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Header from '../Header';
 import ForecastList from '../ForecastList';
 import { fetchCurrentWeatherData, fetchSearchWeatherData } from '../../fetch';
+import { agregatedWeatherForecastList } from '../../helpers';
 
 import './index.scss';
 import Search from '../Search';
@@ -68,7 +69,8 @@ const AppLayout = () => {
                 .then((data) => {
                     setQuery("");
                     setWeather(data.current);
-                    setWeathers(data.dailyForecast);
+                    const agregatedData = agregatedWeatherForecastList(data.dailyForecast);
+                    setWeathers(agregatedData);
                     setIsLoading(false);
                 })
                 .catch((error) => {
